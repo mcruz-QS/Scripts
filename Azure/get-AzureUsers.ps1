@@ -1,0 +1,3 @@
+Login-AzAccount
+Connect-AzureAD
+Connect-AzureRmAccount
