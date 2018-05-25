@@ -1,26 +1,51 @@
 Configuration ScriptTest
 {
+    write-verbose -Message "Starting $MyInvocation.ScriptName " -Verbose
     Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
+    $File = 'C:\temp\DSCHelloWorld.txt'
     Node 'localhost' {
-        Script UpdateConfigurationVersion
+
+        Script MakeDirectories
         {
             GetScript = {
-                $currentVersion = Get-Content (Join-Path -Path $env:SYSTEMDRIVE -ChildPath 'version.txt')
-                return @{ 'Result' = $currentVersion }
+                $gsResult = (Select-String -Path 'C:\temp\DSCHelloWorld.txt' -Pattern 'Hello World!').Matches.Value
+                Return @{
+                    'Result'= $gsResult
+                }
+            }
+
+            SetScript = {
+                'Hello World!' | Out-File 'C:\temp\DSCHelloWorld.txt';
+                Start-Sleep -Seconds (10 * 1)
             }
             TestScript = {
-                $state = $GetScript
-                if( $state['Result'] -eq $using:version )
-                {
-                    Write-Verbose -Message ('{0} -eq {1}' -f $state['Result'],$using:version)
-                    return $true
+                Write-Verbose $using:File
+
+                $Content = 'Hello World!'
+                write-verbose $Content
+
+                If ((Test-path $using:File) -and (Select-String -Path $using:File -Pattern $Content)) {
+                    Write-Verbose 'Both File and Content Match'
+                    $True
                 }
-                Write-Verbose -Message ('Version up-to-date: {0}' -f $using:version)
-                return $false
+                Else {
+                    Write-Verbose 'Either File and/or content do not match'
+                    $False
+                }
+
             }
-            SetScript = {
-                $using:version | Set-Content -Path (Join-Path -Path $env:SYSTEMDRIVE -ChildPath 'version.txt')
+        }
+        Script ScriptExample
+        {
+            SetScript =
+            {
+                $sw = New-Object System.IO.StreamWriter("C:\Temp\TestFile.txt")
+                $sw.WriteLine("Some sample string")
+                $sw.Close()
             }
+            TestScript = { Test-Path "C:\Temp\TestFile.txt" }
+            GetScript = { @{ Result = (Get-Content C:\Temp\TestFile.txt) } }
+            DependsOn = '[Script]MakeDirectories'
         }
     }
 }
