@@ -1,1 +1,7 @@
 .vscode
+*.tfvars
+c#
+*.tfstate*
+*.exe
+*.mof
+lock.json
