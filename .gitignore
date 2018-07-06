@@ -5,3 +5,4 @@ c#
 *.exe
 *.mof
 lock.json
+.terraform
