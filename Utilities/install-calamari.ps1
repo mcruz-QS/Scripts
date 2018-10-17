@@ -13,7 +13,7 @@ Script InstallOctoCalamari
 				SetScript = {
 
                     $OctopusURL = "https://deploy.quarterspot.net"
-                    $OctopusAPIKey = "API-7NKUKBUNCVAE4DGDMBFNAZQ8E"
+                    $OctopusAPIKey =
                     $OctoAPIURL = "$OctopusURL/api/tasks"
                     $MachineName = $env:COMPUTERNAME
 
@@ -51,7 +51,7 @@ Script InstallOctoCalamari
 				TestScript = {
 
                     $OctopusURL = "https://deploy.quarterspot.net"
-                    $OctopusAPIKey = "API-7NKUKBUNCVAE4DGDMBFNAZQ8E"
+                    $OctopusAPIKey =
                     $OctoAPIURL = "$OctopusURL/api/tasks"
                     $MachineName = $env:COMPUTERNAME
 
