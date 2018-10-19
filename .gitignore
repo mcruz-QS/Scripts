@@ -1,0 +1,11 @@
+.vscode/
+Azure/
+AzureDemo/
+InfluxDB/
+Patching/
+SQL/
+Terraform/
+Utilities/
+c#/
+terraform.tfstate
+test/
