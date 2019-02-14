@@ -1,0 +1,1 @@
+#Companion file to Run-WindowsUpdate.ps1. List one KB number (without the KB prefix) per line that should not be installed.
